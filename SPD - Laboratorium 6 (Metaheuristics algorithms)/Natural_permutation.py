@@ -40,8 +40,8 @@ class Natural_permutation:
             #Losujemy liczby z przedzialu od 1 do 29 calkowite
             #Numerujemy zadania
             for j in range(0, m):
-                #p.append(rng.nextInt(1,29))
-                p.append(rng.nextInt(1,9))
+                p.append(rng.nextInt(1,99))
+                #p.append(rng.nextInt(1,9))
             self.P.append(p)
             self.P_Copy.append(p)
 

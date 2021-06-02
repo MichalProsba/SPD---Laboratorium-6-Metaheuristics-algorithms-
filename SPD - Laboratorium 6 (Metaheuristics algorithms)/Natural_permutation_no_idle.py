@@ -1,7 +1,7 @@
-﻿from Generator import RandomNumberGenerator
+from Generator import RandomNumberGenerator
 import copy
 
-class Natural_permutation_no_wait:
+class Natural_permutation_no_idle:
     def __init__(self, seed, n, m):
         rng = RandomNumberGenerator(seed)        
         #Liczba zadan
@@ -40,8 +40,8 @@ class Natural_permutation_no_wait:
             #Losujemy liczby z przedzialu od 1 do 29 calkowite
             #Numerujemy zadania
             for j in range(0, m):
-                #p.append(rng.nextInt(1,29))
-                p.append(rng.nextInt(1,9))
+                p.append(rng.nextInt(1,99))
+                #p.append(rng.nextInt(1,9))
             self.P.append(p)
             self.P_Copy.append(p)
 
@@ -49,66 +49,53 @@ class Natural_permutation_no_wait:
             self.Nr.append(i)
             self.Nr_Copy.append(i)
 
-        self.CalculateCmax(self.Pi)
+        self.CalculateCmax()
         self.CalculateSmax()
         self.UB = copy.deepcopy(self.C[n-1][m-1])
-        
-    def CalculateCmax(self, Pi):
-        C = []
-        for i in range(0, len(Pi)):
-            z = [None] * self.m
-            C.append(z)
+    
+    def CalculateCmax(self):
+        self.C[0][0] = self.P[self.Pi[0] - 1][0]
 
-        C[0][0] = self.P[Pi[0] - 1][0]
+        for i in range(1, self.n):
+            self.C[i][0] = self.C[i-1][0] + self.P[self.Pi[i] - 1][0] 
 
-        for i  in range(1, self.m):
-            C[0][i] = C[0][i-1] + self.P[Pi[0] - 1][i]
-        #######################################################
-        begin = 0
-        for i in range(1,len(Pi)):
-            mistake = 0
-            for j in range(0,self.m):
-                if j < self.m-1:
-                    begin = C[i-1][j+1] - self.P[Pi[i] - 1][j]
-                    if begin + mistake < C[i-1][j]:
-                        mistake = mistake + C[i-1][j] - begin
-                    if j > 0:
-                        if C[i][j-1] > (begin + mistake):
-                            mistake = mistake + C[i][j-1] - begin - mistake
-                    C[i][j] = begin
+        for a in range(1,self.m):
+            move_diagram = 0
+            #Ustaw pierwsze zadanie na maszynie drugiej po pierwszym na maszynie 1
+            self.C[0][a] = self.C[0][a-1] + self.P[self.Pi[0] - 1][a] 
+            for i in range(1,self.n):
+                #Sprawdz czy czas zakonczenia zadania na maszynie poprzedniej jest mniejszy od czasowi rozpoczecia na maszynie
+                if self.C[i][a-1] <= self.C[i-1][a]:
+                    self.C[i][a] = self.C[i-1][a] + self.P[self.Pi[i] - 1][a] 
                 else:
-                    C[i][j] = C[i][j-1] + self.P[Pi[i] - 1][j]
-            for j in range(0,self.m):
-                C[i][j] = C[i][j] + mistake
-        self.C = copy.deepcopy(C)
+                    move_diagram = self.C[i][a-1] - self.C[i-1][a]
+                    self.C[i][a] = self.C[i-1][a] + self.P[self.Pi[i] - 1][a] + move_diagram
+                    for k in range(0, i):
+                        self.C[k][a] = self.C[k][a] + move_diagram
 
     def CalculateCustomCmax(self, Pi):
         C = []
         for i in range(0, len(Pi)):
             z = [None] * self.m
             C.append(z)
-
         C[0][0] = self.P[Pi[0] - 1][0]
 
-        for i  in range(1, self.m):
-            C[0][i] = C[0][i-1] + self.P[Pi[0] - 1][i]
-        #######################################################
-        begin = 0
-        for i in range(1,len(Pi)):
-            mistake = 0
-            for j in range(0,self.m):
-                if j < self.m-1:
-                    begin = C[i-1][j+1] - self.P[Pi[i] - 1][j]
-                    if begin + mistake < C[i-1][j]:
-                        mistake = mistake + C[i-1][j] - begin
-                    if j > 0:
-                        if C[i][j-1] > (begin + mistake):
-                            mistake = mistake + C[i][j-1] - begin - mistake
-                    C[i][j] = begin
+        for i in range(1, len(Pi)):
+            C[i][0] = C[i-1][0] + self.P[Pi[i] - 1][0] 
+
+        for a in range(1,self.m):
+            move_diagram = 0
+            #Ustaw pierwsze zadanie na maszynie drugiej po pierwszym na maszynie 1
+            C[0][a] = C[0][a-1] + self.P[Pi[0] - 1][a] 
+            for i in range(1,len(Pi)):
+                #Sprawdz czy czas zakonczenia zadania na maszynie poprzedniej jest mniejszy od czasowi rozpoczecia na maszynie
+                if C[i][a-1] <= C[i-1][a]:
+                    C[i][a] = C[i-1][a] + self.P[Pi[i] - 1][a] 
                 else:
-                    C[i][j] = C[i][j-1] + self.P[Pi[i] - 1][j]
-            for j in range(0,self.m):
-                C[i][j] = C[i][j] + mistake
+                    move_diagram = C[i][a-1] - C[i-1][a]
+                    C[i][a] = C[i-1][a] + self.P[Pi[i] - 1][a] + move_diagram
+                    for k in range(0, i):
+                        C[k][a] = C[k][a] + move_diagram
         return C[len(Pi)-1][self.m-1]
 
     def CalculatePartialCmax(self, Pi):
@@ -138,4 +125,5 @@ class Natural_permutation_no_wait:
     def __str__(self):
         str1 = "===================================================================\n"
         return str1 + " Pi=" + str(self.Pi) + "\n" + str1 + "\n P=" + str(self.P) + "\n" + str1 + "\n S=" + str(self.S) + "\n" + str1 + "\n C=" + str(self.C) + "\n" + str1 + str(self.UB)
+
 

@@ -8,9 +8,19 @@ class Tabu_search_algorithm(Natural_permutation):
     def __init__ (self, seed, n, m):
         super().__init__(seed, n, m)
         
-        self.Pi_star = list(self.Pi)
-        self.T = self.UB
-        self.Tend = 0.1 * self.UB
+        #Algorytm neh jako start
+        neh = NEH_Algorithm(seed, n, m)
+        neh.DoNEH()
+        self.Pi  = list(neh.Pi)
+        self.Pi_star  = list(neh.Pi)
+        self.T = neh.UB
+        self.Tend = 0.01 * neh.UB
+
+        #Permutacja naturalna jako start
+        #self.Pi_star = list(self.Pi)
+        #self.T = self.UB
+        #self.Tend = 0.1 * self.UB
+
         self.Pi_new=[]  
         self.j_star = 0  
         self.k_star = 0  
@@ -18,25 +28,28 @@ class Tabu_search_algorithm(Natural_permutation):
         self.TabuList = []
         for i in range(0, self.n):
             a = [0] * self.n
-            self.TabuList.append(a)
+            self.TabuList.append(a.copy())
 
-        self.Cadance = 5
+        self.Cadance = self.n
         self.Cbest = self.UB
-        self.limit = 100
+        self.limit = 500
 
     def TabuSearch(self):
         for it in range(0, self.limit):
-            self.Cbest = self.UB
+            self.Cbest = 1000000
             for j in range(0, self.n):
                 for k in range(j+1, self.n):
-                    if self.TabuList[j][k] < it:
+                    if self.TabuList[j][k] <= it:
                         self.Pi_new = list(self.Move(j,k))
                         if self.CalculateCustomCmax(self.Pi_new) < self.Cbest:
-                            self.Cbest = self.CalculateCustomCmax(self.Pi_new)
+                            self.Cbest = self.CalculateCustomCmax(self.Pi_new)    
                             self.j_star = j
                             self.k_star = k
+            #Zapisujemy dobry ruch
             self.Pi = list(self.Move(self.j_star, self.k_star))
+            #Zapisujemy do listy tabu, ze przyszlismy stad i zabraniamy ten ruch na ilosc kadencji
             self.TabuList[self.j_star][self.k_star] = it + self.Cadance
+            self.TabuList[self.k_star][self.j_star] = it + self.Cadance
             if self.CalculateCustomCmax(self.Pi) < self.CalculateCustomCmax(self.Pi_star):
                 self.Pi_star = list(self.Pi)
         self.Pi = list(self.Pi_star)
@@ -49,6 +62,8 @@ class Tabu_search_algorithm(Natural_permutation):
         x = Pi[i]
         del Pi[i]
         Pi.insert(j,x)
+        #Pi[i] = Pi[j]
+        #Pi[j] = x 
         return Pi
 
     def __str__(self):

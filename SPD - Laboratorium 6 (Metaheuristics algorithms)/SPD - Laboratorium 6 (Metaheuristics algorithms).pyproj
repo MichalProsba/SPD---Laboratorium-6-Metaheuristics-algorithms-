@@ -36,16 +36,26 @@
     <Compile Include="Natural_permutation.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Natural_permutation_no_wait.py" />
+    <Compile Include="Natural_permutation_no_idle.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="NEH_Algorithm.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="NEH_Algorithm_no_idle.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Simulated_annealing_algorithm.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Simulated_annealing_algorithm_no_idle.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="SPD___Laboratorium_6__Metaheuristics_algorithms_.py" />
     <Compile Include="Tabu_search_algorithm.py" />
-    <Compile Include="Tabu_search_no_wait_algorithm.py" />
+    <Compile Include="Tabu_search_algorithm_no_idle.py">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
