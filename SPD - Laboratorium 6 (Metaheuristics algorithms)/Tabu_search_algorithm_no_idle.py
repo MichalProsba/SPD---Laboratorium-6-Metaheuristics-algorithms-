@@ -21,13 +21,13 @@ class Tabu_search_algorithm_no_idle(Natural_permutation_no_idle):
         self.TabuList = []
         for i in range(0, self.n):
             a = [0] * self.n
-            self.TabuList.append(a)
+            self.TabuList.append(a.copy())
 
         self.Cadance = 5
         self.Cbest = self.UB
-        self.limit = 100
+        self.limit = 50
 
-        self.Moves = 1
+        self.Moves = 2
 
     def TabuSearch(self):
         for it in range(0, self.limit):
@@ -42,6 +42,7 @@ class Tabu_search_algorithm_no_idle(Natural_permutation_no_idle):
                             self.k_star = k
             self.Pi = list(self.Move(self.j_star, self.k_star))
             self.TabuList[self.j_star][self.k_star] = it + self.Cadance
+            self.TabuList[self.k_star][self.j_star] = it + self.Cadance
             if self.CalculateCustomCmax(self.Pi) < self.CalculateCustomCmax(self.Pi_star):
                 self.Pi_star = list(self.Pi)
         self.Pi = list(self.Pi_star)

@@ -16,8 +16,8 @@ class Simulated_annealing_algorithm_no_idle(Natural_permutation_no_idle):
         self.T = neh_no_idle.UB
         self.Tend = 0.1 * neh_no_idle.UB
 
-        self.alpha = 0.95
-        self.era = 100
+        self.alpha = 0.98
+        self.era = 50
 
         self.Moves = 1
 
