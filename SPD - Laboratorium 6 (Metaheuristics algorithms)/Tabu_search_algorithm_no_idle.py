@@ -23,11 +23,11 @@ class Tabu_search_algorithm_no_idle(Natural_permutation_no_idle):
             a = [0] * self.n
             self.TabuList.append(a.copy())
 
-        self.Cadance = 5
+        self.Cadance = self.n
         self.Cbest = self.UB
-        self.limit = 50
+        self.limit = 100
 
-        self.Moves = 2
+        self.Moves = 1
 
     def TabuSearch(self):
         for it in range(0, self.limit):

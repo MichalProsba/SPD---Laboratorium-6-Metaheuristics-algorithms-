@@ -18,10 +18,6 @@ import random
 import matplotlib.pyplot as plt
 import numpy as np
 
-#seed = 11123
-#tasks = 6
-#machines = 5
-
 seed = 9572817
 tasks = 20
 machines = 5
@@ -70,16 +66,15 @@ machines = 5
 
 ###################################################################################################
 #Wykres w zaleznosci od ilosci zadan
-
 NA = [] 
 NEH = []
 SA = []
 TA = []
 N = []
 
-seed = 9572817
-machines = 5
-list_task = [3,4,5,6,7,8,9,11,13,15,17,19]
+seed = 145534
+machines = 6
+list_task = [3,4,5,6,7,8,9,11,12,13,14,15]
 
 for tasks in list_task:
 
@@ -94,16 +89,16 @@ for tasks in list_task:
     sa_no_idle.SimulatedAnnealing()
     SA.append(sa_no_idle.UB)
 
-    #tb_no_idle = Tabu_search_algorithm_no_idle(seed, tasks, machines)
-    #tb_no_idle.TabuSearch()
-    #TA.append(sa_no_idle.UB)
+    tb_no_idle = Tabu_search_algorithm_no_idle(seed, tasks, machines)
+    tb_no_idle.TabuSearch()
+    TA.append(tb_no_idle.UB)
 
     N.append(tasks)
 
-plt.plot(N, NA, color="red", label='Natural permutation', linewidth=2, alpha=0.5)
-plt.plot(N, NEH, color="green", label='NEH_Algorithm', linewidth=2, alpha=0.5)
-plt.plot(N, SA, color="blue", label='Simulated_annealing', linewidth=2, alpha=0.5)
-#plt.plot(N, TA, color="yellow", label='Tabu search', linewidth=1, alpha=0.5)
+plt.plot(N, NA, color="red", label='Natural permutation', linewidth=1, alpha=0.5)
+plt.plot(N, NEH, color="green", label='NEH_Algorithm', linewidth=1, alpha=0.5)
+plt.plot(N, SA, color="blue", label='Simulated_annealing', linewidth=1, alpha=0.5)
+plt.plot(N, TA, color="black", label='Tabu search', linewidth=1, alpha=0.5)
 plt.legend()
 plt.xlabel("Liczba zadań")
 plt.ylabel("Cmax")
@@ -136,16 +131,16 @@ for machines in list_machines:
     sa_no_idle.SimulatedAnnealing()
     SA.append(sa_no_idle.UB)
 
-    #tb_no_idle = Tabu_search_algorithm_no_idle(seed, tasks, machines)
-    #tb_no_idle.TabuSearch()
-    #TA.append(sa_no_idle.UB)
+    tb_no_idle = Tabu_search_algorithm_no_idle(seed, tasks, machines)
+    tb_no_idle.TabuSearch()
+    TA.append(tb_no_idle.UB)
 
     N.append(machines)
 
-plt.plot(N, NA, color="red", label='Natural permutation', linewidth=2, alpha=0.5)
-plt.plot(N, NEH, color="green", label='NEH_Algorithm', linewidth=2, alpha=0.5)
-plt.plot(N, SA, color="blue", label='Simulated_annealing', linewidth=2, alpha=0.5)
-#plt.plot(N, TA, color="yellow", label='Tabu search', linewidth=2, alpha=0.5)
+plt.plot(N, NA, color="red", label='Natural permutation', linewidth=1, alpha=0.5)
+plt.plot(N, NEH, color="green", label='NEH_Algorithm', linewidth=1, alpha=0.5)
+plt.plot(N, SA, color="blue", label='Simulated_annealing', linewidth=1, alpha=0.5)
+plt.plot(N, TA, color="black", label='Tabu search', linewidth=1, alpha=0.5)
 plt.legend()
 plt.xlabel("Liczba maszyn")
 plt.ylabel("Cmax")
@@ -181,14 +176,14 @@ for seed in list_seed:
 
     tb_no_idle = Tabu_search_algorithm_no_idle(seed, tasks, machines)
     tb_no_idle.TabuSearch()
-    TA.append(sa_no_idle.UB)
+    TA.append(tb_no_idle.UB)
 
     N.append(seed)
 
-plt.plot(N, NA, color="red", label='Natural permutation', linewidth=2, alpha=0.5)
-plt.plot(N, NEH, color="green", label='NEH_Algorithm', linewidth=2, alpha=0.5)
-plt.plot(N, SA, color="blue", label='Simulated_annealing', linewidth=2, alpha=0.5)
-#plt.plot(N, TA, color="yellow", label='Tabu search', linewidth=2, alpha=0.5)
+plt.plot(N, NA, color="red", label='Natural permutation', linewidth=1, alpha=0.5)
+plt.plot(N, NEH, color="green", label='NEH_Algorithm', linewidth=1, alpha=0.5)
+plt.plot(N, SA, color="blue", label='Simulated_annealing', linewidth=1, alpha=0.5)
+plt.plot(N, TA, color="black", label='Tabu search', linewidth=1, alpha=0.5)
 plt.legend()
 plt.xlabel("Liczba ziarna")
 plt.ylabel("Cmax")
@@ -197,7 +192,7 @@ plt.grid(True)
 plt.show()
 
 ####################################################################################################
-##Wykres w zaleznosci od wykonywanych ruchów
+##Wykres w zaleznosci od wykonywanych ruchów Simulated annealing
 
 NA = [] 
 NEH = []
@@ -240,25 +235,215 @@ for tasks in list_task:
     sa_no_idle.SimulatedAnnealing()
     SA4.append(sa_no_idle.UB)
 
-    #tb_no_idle = Tabu_search_algorithm_no_idle(seed, tasks, machines)
-    #tb_no_idle.TabuSearch()
-    #TA.append(sa_no_idle.UB)
-
     N.append(tasks)
 
-plt.plot(N, NA, color="red", label='Natural permutation', linewidth=2, alpha=0.5)
-plt.plot(N, NEH, color="green", label='NEH_Algorithm', linewidth=2, alpha=0.5)
-plt.plot(N, SA1, color="blue", label='Simulated_annealing - swap', linewidth=2, alpha=0.5)
-plt.plot(N, SA2, color="cyan", label='Simulated_annealing - insert', linewidth=2, alpha=0.5)
-plt.plot(N, SA3, color="magenta", label='Simulated_annealing - reverse', linewidth=2, alpha=0.5)
-plt.plot(N, SA4, color="black", label='Simulated_annealing - adjacent swap', linewidth=2, alpha=0.5)
-#plt.plot(N, TA, color="yellow", label='Tabu search', linewidth=2, alpha=0.5)
+plt.plot(N, NA, color="red", label='Natural permutation', linewidth=1, alpha=0.5)
+plt.plot(N, NEH, color="green", label='NEH_Algorithm', linewidth=1, alpha=0.5)
+plt.plot(N, SA1, color="blue", label='Simulated annealing - swap', linewidth=1, alpha=0.5)
+plt.plot(N, SA2, color="cyan", label='Simulated annealing - insert', linewidth=1, alpha=0.5)
+plt.plot(N, SA3, color="magenta", label='Simulated annealing - reverse', linewidth=1, alpha=0.5)
+plt.plot(N, SA4, color="black", label='Simulated annealing - adjacent swap', linewidth=1, alpha=0.5)
 plt.legend()
 plt.xlabel("Liczba zadań")
 plt.ylabel("Cmax")
 plt.title("Wykres Cmax w zależności od liczby zadań")
 plt.grid(True)
 plt.show()
+
+####################################################################################################
+##Wykres w zaleznosci od wspolczynnika alpha Simulated annealing
+
+NA = [] 
+NEH = []
+SA1 = []
+SA2 = []
+SA3 = []
+SA4 = []
+TA = []
+N = []
+
+seed = 8785744
+machines = 7
+list_task = [3,4,5,6,7,8,9,11,13,15,17,19]
+for tasks in list_task:
+
+    natural_permutation_no_idle = Natural_permutation_no_idle(seed, tasks, machines)
+    NA.append(natural_permutation_no_idle.UB)
+
+    neh_no_idle = NEH_Algorithm_no_idle(seed, tasks, machines)
+    neh_no_idle.DoNEH()
+    NEH.append(neh_no_idle.UB)
+
+    sa_no_idle = Simulated_annealing_algorithm_no_idle(seed, tasks, machines)
+    sa_no_idle.alpha = 0.99
+    sa_no_idle.SimulatedAnnealing()
+    SA1.append(sa_no_idle.UB)
+
+    sa_no_idle = Simulated_annealing_algorithm_no_idle(seed, tasks, machines)
+    sa_no_idle.alpha = 0.95
+    sa_no_idle.SimulatedAnnealing()
+    SA2.append(sa_no_idle.UB)
+
+    sa_no_idle = Simulated_annealing_algorithm_no_idle(seed, tasks, machines)
+    sa_no_idle.alpha = 0.9
+    sa_no_idle.SimulatedAnnealing()
+    SA3.append(sa_no_idle.UB)
+
+    sa_no_idle = Simulated_annealing_algorithm_no_idle(seed, tasks, machines)
+    sa_no_idle.alpha = 0.8
+    sa_no_idle.SimulatedAnnealing()
+    SA4.append(sa_no_idle.UB)
+
+    N.append(tasks)
+
+plt.plot(N, NA, color="red", label='Natural permutation', linewidth=1, alpha=0.5)
+plt.plot(N, NEH, color="green", label='NEH_Algorithm', linewidth=1, alpha=0.5)
+plt.plot(N, SA1, color="blue", label='Simulated annealing - alpha = 0.99', linewidth=1, alpha=0.5)
+plt.plot(N, SA2, color="cyan", label='Simulated annealing - alpha = 0.95', linewidth=1, alpha=0.5)
+plt.plot(N, SA3, color="magenta", label='Simulated annealing - alpha = 0.90', linewidth=1, alpha=0.5)
+plt.plot(N, SA4, color="black", label='Simulated annealing - alpha = 0.80', linewidth=1, alpha=0.5)
+plt.legend()
+plt.xlabel("Liczba zadań")
+plt.ylabel("Cmax")
+plt.title("Wykres Cmax w zależności od liczby zadań")
+plt.grid(True)
+plt.show()
+
+
+####################################################################################################
+##Wykres w zaleznosci od wykonywanych ruchów - Tabu search
+
+NA = [] 
+NEH = []
+TA1 = []
+TA2 = []
+TA3 = []
+TA4 = []
+TA = []
+N = []
+
+seed = 8785744
+machines = 7
+list_task = [3,4,5,6,7,8,9,11,13,15,17,19]
+for tasks in list_task:
+
+    natural_permutation_no_idle = Natural_permutation_no_idle(seed, tasks, machines)
+    NA.append(natural_permutation_no_idle.UB)
+
+    neh_no_idle = NEH_Algorithm_no_idle(seed, tasks, machines)
+    neh_no_idle.DoNEH()
+    NEH.append(neh_no_idle.UB)
+
+    tb_no_idle = Tabu_search_algorithm_no_idle(seed, tasks, machines)
+    tb_no_idle.Moves = 1
+    tb_no_idle.TabuSearch()
+    TA1.append(tb_no_idle.UB)
+
+    tb_no_idle = Tabu_search_algorithm_no_idle(seed, tasks, machines)
+    tb_no_idle.Moves = 2
+    tb_no_idle.TabuSearch()
+    TA2.append(tb_no_idle.UB)
+
+    tb_no_idle = Tabu_search_algorithm_no_idle(seed, tasks, machines)
+    tb_no_idle.Moves = 3
+    tb_no_idle.TabuSearch()
+    TA3.append(tb_no_idle.UB)
+
+    tb_no_idle = Tabu_search_algorithm_no_idle(seed, tasks, machines)
+    tb_no_idle.Moves = 4
+    tb_no_idle.TabuSearch()
+    TA4.append(tb_no_idle.UB)
+
+    N.append(tasks)
+
+plt.plot(N, NA, color="red", label='Natural permutation', linewidth=1, alpha=0.5)
+plt.plot(N, NEH, color="green", label='NEH_Algorithm', linewidth=1, alpha=0.5)
+plt.plot(N, TA1, color="blue", label='Tabu search - swap', linewidth=1, alpha=0.5)
+plt.plot(N, TA2, color="cyan", label='Tabu search - insert', linewidth=1, alpha=0.5)
+plt.plot(N, TA3, color="magenta", label='Tabu search - reverse', linewidth=1, alpha=0.5)
+plt.plot(N, TA4, color="black", label='Tabu search - adjacent swap', linewidth=1, alpha=0.5)
+plt.legend()
+plt.xlabel("Liczba zadań")
+plt.ylabel("Cmax")
+plt.title("Wykres Cmax w zależności od liczby zadań")
+plt.grid(True)
+plt.show()
+
+####################################################################################################
+##Wykres w zaleznosci od cadencji - Tabu search
+
+NA = [] 
+NEH = []
+TA1 = []
+TA2 = []
+TA3 = []
+TA4 = []
+TA = []
+N = []
+
+seed = 8785744
+machines = 7
+list_task = [3,4,5,6,7,8,9,11,13,15,17,19]
+for tasks in list_task:
+
+    natural_permutation_no_idle = Natural_permutation_no_idle(seed, tasks, machines)
+    NA.append(natural_permutation_no_idle.UB)
+
+    neh_no_idle = NEH_Algorithm_no_idle(seed, tasks, machines)
+    neh_no_idle.DoNEH()
+    NEH.append(neh_no_idle.UB)
+
+    tb_no_idle = Tabu_search_algorithm_no_idle(seed, tasks, machines)
+    tb_no_idle.Cadance = (int)(tb_no_idle.n/8)
+    tb_no_idle.TabuSearch()
+    TA1.append(tb_no_idle.UB)
+
+    tb_no_idle = Tabu_search_algorithm_no_idle(seed, tasks, machines)
+    tb_no_idle.Cadance = (int)(tb_no_idle.n/4)
+    tb_no_idle.TabuSearch()
+    TA2.append(tb_no_idle.UB)
+
+    tb_no_idle = Tabu_search_algorithm_no_idle(seed, tasks, machines)
+    tb_no_idle.Cadance = (int)(tb_no_idle.n/2)
+    tb_no_idle.TabuSearch()
+    TA3.append(tb_no_idle.UB)
+
+    tb_no_idle = Tabu_search_algorithm_no_idle(seed, tasks, machines)
+    tb_no_idle.Cadance = (int)(tb_no_idle.n/1)
+    tb_no_idle.TabuSearch()
+    TA4.append(tb_no_idle.UB)
+
+    N.append(tasks)
+
+plt.plot(N, NA, color="red", label='Natural permutation', linewidth=1, alpha=0.5)
+plt.plot(N, NEH, color="green", label='NEH_Algorithm', linewidth=1, alpha=0.5)
+plt.plot(N, TA1, color="blue", label='Tabu search - Cadence = n/8', linewidth=1, alpha=0.5)
+plt.plot(N, TA2, color="cyan", label='Tabu search - Cadence = n/4', linewidth=1, alpha=0.5)
+plt.plot(N, TA3, color="magenta", label='Tabu search - Cadence = n/2', linewidth=1, alpha=0.5)
+plt.plot(N, TA4, color="black", label='Tabu search - Cadence = n', linewidth=1, alpha=0.5)
+plt.legend()
+plt.xlabel("Liczba zadań")
+plt.ylabel("Cmax")
+plt.title("Wykres Cmax w zależności od liczby zadań")
+plt.grid(True)
+plt.show()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
